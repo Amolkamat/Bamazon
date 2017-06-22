@@ -2,6 +2,7 @@
 var mysql = require('mysql');
 var Table = require('cli-table');
 var inquirer = require('inquirer');
+var query = require('./query.js');
 var colors = require('colors/safe');
 
 //Define Global Variables
