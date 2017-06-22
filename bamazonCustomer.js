@@ -2,9 +2,6 @@
 var mysql = require('mysql');
 var Table = require('cli-table');
 var inquirer = require('inquirer');
-var questions = require('./questions.js');
-var query = require('./query.js');
-var tableDisplayDefinition = require('./tableHeaders.js');
 var colors = require('colors/safe');
 
 //Define Global Variables
@@ -40,7 +37,7 @@ var pushTableData = function(results, table) {
 }
 
 
-//Display all Products in inventory
+//Display all Products in Inventory
 var displayAllProducts = function(userProfile) {
 
     connection.query(query.sqlQuery.selectAllProducts, function(selectQueryError, results, fields) {
