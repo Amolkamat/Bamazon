@@ -5,12 +5,6 @@ exports.prompt = {
         type: 'list',
         choices: ['Customer', 'Manager']
     }],
-    managerProfileQuestion: [{
-        name: 'managerProfileAnswer',
-        message: 'Please select an option',
-        type: 'list',
-        choices: ['1. View Products for Sale', '2. View Low Inventory', '3. Add to Inventory', '4. Add New Product', '5. Quit Application']
-    }],
     purchaseProductQuestion: [{
         name: 'requestedItem',
         message: 'Please enter the Product Name you wish to Purchase',
@@ -27,55 +21,4 @@ exports.prompt = {
         type: 'list',
         choices: ['Yes', 'No']
     }],
-    addInventoryProductQuestion: [{
-        name: 'requestedProduct',
-        message: 'Please enter ID of the product that wish to add',
-        type: 'input'
-    }],
-    addInventoryQuantityQuestion: [{
-        name: 'requestedNumber',
-        message: 'Please enter the count to items to be added to existing Stock',
-        type: 'input'
-    }],
-    supervisorProfileQuestion: [{
-        name: 'supervisorProfileAnswer',
-        message: 'Please choose an Option',
-        type: 'list',
-        choices: ['1. View Product Sales by Department', '2. Create New Department', '3. Quit Application']
-    }]
-
-
-}
-
-exports.ManagerPrompt = [{
-        name: 'addNewProductAnswer',
-        message: 'Please enter the Product Name',
-        type: 'input'
-    },
-    {
-        name: 'addNewDepartmentAnswer',
-        message: 'Please enter the Department Name',
-        type: 'input'
-    },
-    {
-        name: 'addNewPriceAnswer',
-        message: 'Please enter the price of the Product',
-        type: 'input'
-    },
-    {
-        name: 'addNewStockAnswer',
-        message: 'Please enter the initial Stock amount',
-        type: 'input'
-    }
-]
-
-exports.supervisorPrompt = [{
-            name: 'addNewDepartmentName',
-            message: 'Please enter the Department Name',
-            type: 'input'
-        },
-        {
-            name: 'addNewOverheadCosts',
-            message: 'Please enter the Overhead Costs',
-            type: 'input'
-        }
+ 

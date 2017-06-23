@@ -2,8 +2,7 @@ var mysql = require('mysql');
 var inquirer = require('inquirer');
 var Table = require('cli-table');
 var query = require('./sqlQuery.js');
-var tableDisplayDefinition = require('./tableHeader.js');
-var questions = require('./customerRequest.js');
+var customerRequest = require('./customerRequest.js');
 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -40,9 +39,7 @@ var displayAllProducts = function(userProfile) {
     connection.query(query.sqlQuery.selectAllProducts, function(selectQueryError, results, fields) {
         if (selectQueryError) throw selectQueryError;
         var table = new Table({
-            head: tableDisplayDefinition.headers.fullTable.fullTableColumns,
-            colWidths: tableDisplayDefinition.headers.fullTable.fullTableWidth
-        });
+            });
 
         pushTableData(results, table);
         console.log(table.toString());
