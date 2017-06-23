@@ -1,14 +1,10 @@
-//Import all the external packages and javascript required to run the application
 var mysql = require('mysql');
-var Table = require('cli-table');
 var inquirer = require('inquirer');
-var query = require('./query.js');
-var colors = require('colors/safe');
+var Table = require('cli-table');
+var query = require('./sqlQuery.js');
+var tableDisplayDefinition = require('./tableHeader.js');
+var questions = require('./customerRequest.js');
 
-//Define Global Variables
-
-
-//Create a connection String
 var connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
@@ -18,11 +14,11 @@ var connection = mysql.createConnection({
 
 });
 
-//Connect to the database
+
 connection.connect(function(err) {
     if (err) throw err
     displayAllProducts('customer');
-    //connection.end();
+    
 })
 
 var pushTableData = function(results, table) {
@@ -38,7 +34,7 @@ var pushTableData = function(results, table) {
 }
 
 
-//Display all Products in Inventory
+
 var displayAllProducts = function(userProfile) {
 
     connection.query(query.sqlQuery.selectAllProducts, function(selectQueryError, results, fields) {
@@ -50,7 +46,7 @@ var displayAllProducts = function(userProfile) {
 
         pushTableData(results, table);
         console.log(table.toString());
-        //Determine the recursive function based on who caller.
+        
         requestForPurchase();
 
     })
@@ -68,7 +64,7 @@ var requestForPurchase = function() {
     })
 
 }
-//Generate Receipt Functionality
+
 var printReceipt = function(productName, productPrice, productQuantity, productId) {
     console.log('-----------------------------------------------------------');
     console.log('               BAMAZON   RECEIPT                    ');
@@ -100,30 +96,30 @@ var purchaseProducts = function() {
                         dbDepartmentName = row.department_name;
                     })
                     if (dbStockQuantity >= quantityAnswer.requestedNumber) {
-                        //Update Products Inventory
+                        
                         connection.query(query.sqlQuery.updateItem, [dbStockQuantity - quantityAnswer.requestedNumber, parseFloat(quantityAnswer.requestedNumber * dbPrice), dbItemId], function(updateQueryError, results, fields) {
                             if (updateQueryError) throw updateQueryError;
                             console.log("Items Successfully Purchased");
                             printReceipt(dbProductName, dbPrice, quantityAnswer.requestedNumber, dbItemId);
 
-                            //Update Department Table
+                            
                             connection.query(query.sqlQuery.updateDepartmentSales, [parseFloat(quantityAnswer.requestedNumber * dbPrice), dbDepartmentName.toLowerCase()], function(departmentInsertQueryError, results, fields) {
                                 if (departmentInsertQueryError) throw departmentInsertQueryError;
                             })
                             displayAllProducts();
                         })
                     } else {
-                        console.log(colors.red('\u2717' + ' Insufficient Quantity - Please enter a valid quantity'));
+                        console.log('\u2717' + ' Insufficient Quantity - Please enter a valid quantity');
                         requestForPurchase();
                     }
 
                 } else if (results.length === 0)
 
                 {
-                    console.log(colors.red('\u2717' + ' No results matched your criteria - Please enter a valid Product name'));
+                    console.log('\u2717' + ' No results matched your criteria - Please enter a valid Product name');
                     requestForPurchase();
                 } else {
-                    console.log(colors.red('\u2717' + ' More than one results matched your criteria - Please enter a Product'));
+                    console.log('\u2717' + ' More than one results matched your criteria - Please enter a Product');
                     requestForPurchase();
                 }
 
