@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
     user: 'root',
-    password: 'kratos25',
+    password:  'kratos25',
     database: 'Bamazon'
 
 });
@@ -52,7 +52,12 @@ var displayAllProducts = function(userProfile) {
 
 
 var requestForPurchase = function() {
-    inquirer.prompt(questions.prompt.inquirePurchaseQuestion).then(function(userResponse) {
+    inquirer.prompt([{
+                name: 'inquirePurchaseAnswer',
+                message: 'Do you want to Purchase Items ?',
+                type: 'list',
+                choices: ['Yes','No']
+              }]).then(function(userResponse) {
         if (userResponse.inquirePurchaseAnswer.toLowerCase() == 'yes' || userResponse.inquirePurchaseAnswer.toLowerCase() == 'y') {
             purchaseProducts();
         } else {
@@ -63,19 +68,20 @@ var requestForPurchase = function() {
 }
 
 var printReceipt = function(productName, productPrice, productQuantity, productId) {
-    console.log('-----------------------------------------------------------');
-    console.log('               BAMAZON   RECEIPT                    ');
-    console.log('         eat sleep code repeat forever                     ');
-    console.log('ST# 2006 OP# 0006176  TE# 03                       ');
-    console.log(productName + '                         ' + productPrice + ' * ' + productQuantity + '        ' + (productPrice * productQuantity));
-    console.log(new Date());
-    console.log('          # ITEMS SOLD 1         ');
-    console.log('-----------------------------------------------------------');
+    console.log('Items successfully purchased!');
 }
 
 var purchaseProducts = function() {
-    inquirer.prompt(questions.prompt.purchaseProductQuestion).then(function(itemAnswer) {
-        inquirer.prompt(questions.prompt.purchaseQuantityQuestion).then(function(quantityAnswer) {
+    inquirer.prompt([{
+    name: 'requestedItem',
+    message: 'Please enter the Product Name you wish to Purchase',
+    type: 'input'
+    }]).then(function(itemAnswer) {
+        inquirer.prompt([{
+        name: 'requestedNumber',
+        message: 'Please enter the count of the items you wish to Purchase',
+        type: 'input'
+        }]).then(function(quantityAnswer) {
             connection.query(query.sqlQuery.searchProductByName, "%" + [itemAnswer.requestedItem] + "%", function(selectQueryError, results, fields) {
                 if (selectQueryError) throw selectQueryError;
                 console.log(results.length);

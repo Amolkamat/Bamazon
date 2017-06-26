@@ -20,5 +20,4 @@ exports.prompt = {
         message: 'Do you want to Purchase Items ?',
         type: 'list',
         choices: ['Yes', 'No']
-    }],
- 
+    }]}
